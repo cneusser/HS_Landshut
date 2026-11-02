@@ -37,6 +37,54 @@ a.dl:hover{border-color:var(--navy);background:var(--panel)}
  header p,.meta,.lit,a.dl span{color:#9fabc4}
  .meta{border-color:#313a52}
 }
+
+
+.quiz{margin-top:14px}
+.q{border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin:12px 0}
+.q .num{font-size:11.5px;letter-spacing:1.2px;text-transform:uppercase;color:var(--acc);font-weight:700}
+.q .prompt{font-weight:600;margin:6px 0 12px;line-height:1.45}
+.opt{display:block;width:100%;text-align:left;border:1px solid var(--line);background:transparent;color:inherit;
+     font:inherit;line-height:1.45;border-radius:8px;padding:11px 14px;margin:7px 0;cursor:pointer;transition:border-color .15s}
+.opt:hover:not(:disabled){border-color:var(--navy)}
+.opt:disabled{cursor:default}
+.opt.ok{border-color:#1F6B4F;background:rgba(31,107,79,.12);font-weight:600}
+.opt.no{border-color:#9B2F2F;background:rgba(155,47,47,.12)}
+.opt .mark{float:right;font-weight:700;margin-left:10px}
+.why{margin-top:11px;padding:12px 14px;border-left:3px solid var(--acc);background:var(--panel);
+     border-radius:0 8px 8px 0;font-size:15px;line-height:1.55}
+.hidden{display:none}
+.ghost{border:1px solid var(--line);background:transparent;color:var(--navy);font:inherit;font-weight:600;
+       border-radius:8px;padding:9px 15px;cursor:pointer;margin-top:4px}
+.ghost:hover{border-color:var(--navy)}
+.bar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;
+     border-top:1px solid var(--line);margin-top:18px;padding-top:14px;font-size:15px;color:var(--slate)}
+.bar b{color:var(--navy)}
+.hs{margin-top:16px;border:1px solid var(--line);border-radius:10px;padding:16px 18px;background:var(--panel)}
+.hs h3{margin:0 0 4px;font-size:17px;color:var(--navy)}
+.hs .note{font-size:13.5px;color:var(--slate);margin:0 0 12px;line-height:1.5}
+.hs form{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.hs input{flex:1 1 180px;min-width:0;border:1px solid var(--line);border-radius:8px;padding:10px 12px;
+          font:inherit;background:var(--bg,#fff);color:inherit}
+.hs input:focus{outline:2px solid var(--acc);outline-offset:1px}
+.hs button[type=submit]{border:none;background:var(--navy);color:#fff;font:inherit;font-weight:700;
+          border-radius:8px;padding:10px 18px;cursor:pointer}
+.hs table{width:100%;border-collapse:collapse;margin-top:14px;font-size:15px}
+.hs th{text-align:left;font-size:12px;letter-spacing:.6px;text-transform:uppercase;color:var(--slate);
+       border-bottom:1px solid var(--line);padding:0 8px 6px 0;font-weight:700}
+.hs td{padding:7px 8px 7px 0;border-bottom:1px solid var(--line)}
+.hs tr.me td{font-weight:700;color:var(--navy)}
+.hs td.r{width:2.2em;color:var(--acc);font-weight:700}
+.hs td.p{text-align:right;white-space:nowrap}
+.hs th.p{text-align:right}
+.hs td.d{color:var(--slate);font-size:13.5px;white-space:nowrap}
+.hs .clear{background:none;border:none;color:var(--slate);font:inherit;font-size:13.5px;
+           text-decoration:underline;cursor:pointer;padding:0;margin-top:10px}
+@media (prefers-color-scheme:dark){
+ .ghost,.bar b,.hs h3,.hs tr.me td{color:#C8D7EE}
+ .opt:hover:not(:disabled),.ghost:hover{border-color:#C8D7EE}
+ .hs input{background:#14161c}
+ .hs button[type=submit]{background:#C8D7EE;color:#14161c}
+}
 </style>
 </head>
 <body>
@@ -61,6 +109,138 @@ unverändert. Sie beraten weiterhin den Käufer.</p>
 <p>Mitbringen zur n&auml;chsten Sitzung. Wir beginnen damit, und zwei Gruppen stellen vor. Bewertet wird nicht die
 Rechnung, sondern die Begr&uuml;ndung.</p>
 
+
+
+<h2>Selbsttest</h2>
+<p>Sechs Fragen zu den Kernpunkten und zwei Transferfragen ohne vorgegebene Antwort. Jede Antwort wird sofort erläutert, auch die richtige. Nach der sechsten Frage können Sie sich in die Bestenliste eintragen.</p>
+<div class="quiz" id="quiz"></div>
+<script>
+
+(function(){
+  var data = [{"q": "Warum ist eine Nachfolgefinanzierung schwerer zu stemmen als die Finanzierung einer neuen Maschine?", "opts": ["Weil Übernahmen fast immer teurer sind als Maschinen.", "Weil kein neuer haftender Gegenstand entsteht und derselbe Zahlungsstrom künftig Betrieb und Kaufpreis tragen muss.", "Weil Banken Nachfolgen grundsätzlich kritischer bewerten als Investitionen.", "Weil Fördermittel für Übernahmen nicht zur Verfügung stehen."], "ok": 1, "why": "Der Kaufpreis fließt an den Verkäufer und verlässt das Unternehmen. Es kommt nichts hinzu, das haftet, und es entsteht kein zusätzlicher Zahlungsstrom. Genau deshalb heißt die zentrale Kennzahl hier Kapitaldienstfähigkeit und nicht Rendite."}, {"q": "Kontokorrentlinie und Verkäuferdarlehen tragen im Fall denselben Betrag von 150.000 Euro. Die Summe geht mit beiden auf. Warum ist der Kontokorrent trotzdem der falsche Baustein?", "opts": ["Weil er teurer ist als das Verkäuferdarlehen.", "Weil die Bank ihn bei einer Übernahme nicht gewährt.", "Weil er täglich kündbar ist und für laufenden Bedarf gedacht ist, nicht für einen Kaufpreis.", "Weil er nicht förderfähig ist."], "ok": 2, "why": "Eine Kreditlinie überbrückt die Zeit zwischen Materialeinkauf und Zahlungseingang. Sie ist jederzeit kündbar. Einen Kaufpreis darauf zu stützen heißt, die Finanzierung auf eine Zusage zu bauen, die jemand anderes morgen zurückziehen kann. Zwei Karten, gleicher Betrag, dieselbe Summe: nur die Begründung trennt sie."}, {"q": "Was macht Nachrangkapital zum Hebel der ganzen Struktur?", "opts": ["Es ist der günstigste Baustein im Stapel.", "Es braucht keine Sicherheiten und zählt der Bank wirtschaftlich fast wie Eigenkapital, deshalb gibt sie das vorrangige Fremdkapital überhaupt erst.", "Es wird im Insolvenzfall zuerst bedient.", "Es ersetzt die Prüfung der Kapitaldienstfähigkeit."], "ok": 1, "why": "Im Fall sind es 430.000 Euro Nachrang. Sie sind der Grund, warum die Bank die vorrangigen 450.000 Euro gibt. Je weiter unten ein Baustein liegt, desto teurer ist er, und desto mehr Fremdkapital macht er erst möglich. Nicht der Produktname entscheidet, sondern die Rangstelle."}, {"q": "Warum legt die Bank Wert auf das Verkäuferdarlehen, obwohl es mit 150.000 Euro nicht die große Summe ist?", "opts": ["Weil es die günstigste Finanzierungsform ist.", "Weil es vorrangig besichert ist.", "Weil es ein Signal ist: Der Verkäufer glaubt seiner eigenen Zahlenreihe und bleibt im Risiko.", "Weil Förderbanken es verlangen."], "ok": 2, "why": "Finanzierungstheoretisch ist das Signalwirkung privater Information (Ross, 1977; Leland und Pyle, 1977). Der Verkäufer weiß mehr über das Unternehmen als jeder andere. Dass er einen Teil des Preises stundet, ist eine Aussage über seine eigene Planung. Der Kontokorrent hätte dieselbe Lücke geschlossen, aber der Bank nichts erzählt."}, {"q": "Wer ist bei einer Unternehmensnachfolge der Kreditnehmer?", "opts": ["Das Zielunternehmen, weil aus seinem Zahlungsstrom getilgt wird.", "Der Käufer, privat oder über eine eigens gegründete Erwerbergesellschaft.", "Verkäufer und Käufer gemeinsam.", "Die Hausbank, die den Förderkredit durchleitet."], "ok": 1, "why": "Das Zielunternehmen darf seinen eigenen Kauf nicht finanzieren: bei der AG verboten nach § 71a AktG, bei der GmbH durch die Kapitalerhaltung nach § 30 GmbHG begrenzt. Gerechnet wird trotzdem am Unternehmen, weil der Kapitaldienst aus dessen Zahlungsstrom kommt. Nach oben gelangt er über Ausschüttung, Verschmelzung nach dem Closing oder eine Organschaft."}, {"q": "Die Ausfallbürgschaft der Bürgschaftsbank deckt 80 Prozent des Bankdarlehens. Wie geht sie in die Finanzierungsrechnung ein?", "opts": ["Mit 80 Prozent der verbürgten Summe als eigener Baustein.", "Gar nicht. Sie bringt kein Geld, sie ermöglicht Geld.", "Als Eigenkapitalersatz in voller Höhe.", "Als nachrangiger Baustein unterhalb des Verkäuferdarlehens."], "ok": 1, "why": "Die Bürgschaft ersetzt fehlende Sicherheiten, nicht fehlendes Kapital. Sie steht neben dem Stapel, nicht darin. Wer sie als Betrag mitrechnet, kommt über die benötigte Million und hat die Struktur rechnerisch gesprengt."}, {"q": "Transferfrage: Der Verkäufer besteht im letzten Moment auf vollständiger Zahlung bei Closing. Das Verkäuferdarlehen über 150.000 Euro entfällt. Was ändert sich, und zwar über die fehlenden 150.000 Euro hinaus?", "why": "Zwei Dinge gehen verloren, und das zweite wiegt schwerer. Erstens fehlt Nachrangkapital, der Nachrang sinkt von 430.000 auf 280.000 Euro. Damit wird die Bank entweder mehr Sicherheiten, eine höhere Bürgschaftsquote oder mehr Eigenmittel verlangen, denn ihr vorrangiger Anteil steigt relativ. Zweitens fällt das Signal weg: Nach dem Closing bleibt außer der Bank niemand im Risiko. Der Verkäufer, der am meisten über das Unternehmen weiß, verlässt es vollständig und sofort. Genau das ist der Punkt, an dem eine Bank anfängt, nach dem Grund zu fragen. Eine saubere Antwort im Kreditgespräch benennt beides getrennt: die Lücke ist ein Rechenproblem, der fehlende Nachrang ein Strukturproblem, und der fehlende Verbleib des Verkäufers ein Vertrauensproblem."}, {"q": "Transferfrage: Ein anderer Käufer bringt 300.000 Euro Eigenmittel mit statt 120.000. Welcher Baustein wird dadurch verzichtbar, und warum ist die Struktur trotzdem nicht automatisch die bessere?", "why": "Rechnerisch ließe sich das ERP-Kapital 058 deutlich reduzieren oder ganz ersetzen, denn es ist genau dafür da, fehlendes Eigenkapital zu ersetzen. Die Lücke sinkt auf 700.000 Euro. Trotzdem ist die Struktur nicht zwingend besser. Erstens ist ERP-Kapital nachrangig und zinsgünstig, mit sieben tilgungsfreien Jahren: Es schont die Liquidität in genau den Jahren, in denen der Nachfolger das Unternehmen kennenlernt. Eigene Mittel in voller Höhe einzusetzen nimmt dem Käufer die private Reserve, und eine Nachfolge ohne Reserve ist eine Nachfolge ohne Fehlertoleranz. Zweitens bleibt die Kapitaldienstfähigkeit die bindende Größe, nicht die Eigenkapitalquote. Die richtige Frage lautet deshalb nicht, wie viel Eigenkapital maximal möglich ist, sondern wie viel Liquidität der Nachfolger in den ersten drei Jahren braucht."}], L = {"q": "Frage", "t": "Transfer", "show": "Ein möglicher Antwortweg", "hide": "Antwortweg ausblenden", "score": "{d} von {t} Fragen beantwortet, {r} richtig", "again": "Von vorn", "hsTitle": "Bestenliste", "hsNote": "Die Liste bleibt auf diesem Gerät gespeichert und wird nirgendwohin übertragen. Sie sehen also Ihre eigenen Versuche und die der Personen, die an diesem Gerät gespielt haben.", "name": "Name", "pts": "Punkte", "when": "Datum", "ph": "Name oder Kürzel", "enter": "Eintragen", "saved": "Eingetragen. Der Eintrag bleibt beim nächsten Besuch erhalten.", "clear": "Liste auf diesem Gerät löschen", "sure": "Alle Einträge auf diesem Gerät löschen?"}, KEY = "landshut-v1-nachfolge";
+  var root = document.getElementById('quiz'); if(!root) return;
+  var done = 0, right = 0, total = data.filter(function(x){return x.opts;}).length;
+  var count, hsBox;
+
+  function store(v){ try{ if(v===undefined){ var r=localStorage.getItem(KEY); return r?JSON.parse(r):[]; }
+                          localStorage.setItem(KEY, JSON.stringify(v)); }catch(e){ return []; } }
+
+  function renderHs(mineId){
+    if(!hsBox) return;
+    var list = store() || [];
+    list.sort(function(a,b){ return b.p - a.p || a.t - b.t; });
+    var old = hsBox.querySelector('table'); if(old) old.remove();
+    var oldc = hsBox.querySelector('.clear'); if(oldc) oldc.remove();
+    if(!list.length) return;
+    var tb = document.createElement('table');
+    tb.innerHTML = '<thead><tr><th></th><th>'+L.name+'</th><th class="p">'+L.pts+'</th><th class="d">'+L.when+'</th></tr></thead>';
+    var body = document.createElement('tbody');
+    list.slice(0,10).forEach(function(e,i){
+      var tr = document.createElement('tr');
+      if(e.t === mineId) tr.className = 'me';
+      var d = new Date(e.t);
+      var ds = ('0'+d.getDate()).slice(-2)+'.'+('0'+(d.getMonth()+1)).slice(-2)+'.'+d.getFullYear();
+      [['r', String(i+1)], ['', e.n], ['p', e.p+' / '+total], ['d', ds]].forEach(function(c){
+        var td = document.createElement('td'); if(c[0]) td.className = c[0];
+        td.textContent = c[1]; tr.appendChild(td);
+      });
+      body.appendChild(tr);
+    });
+    tb.appendChild(body); hsBox.appendChild(tb);
+    var cl = document.createElement('button');
+    cl.type='button'; cl.className='clear'; cl.textContent = L.clear;
+    cl.addEventListener('click', function(){ if(confirm(L.sure)){ store([]); renderHs(); } });
+    hsBox.appendChild(cl);
+  }
+
+  function buildHs(){
+    hsBox = document.createElement('div'); hsBox.className = 'hs';
+    var h = document.createElement('h3'); h.textContent = L.hsTitle; hsBox.appendChild(h);
+    var n = document.createElement('p'); n.className='note'; n.textContent = L.hsNote; hsBox.appendChild(n);
+    var f = document.createElement('form');
+    var inp = document.createElement('input');
+    inp.type='text'; inp.maxLength=24; inp.placeholder = L.ph;
+    inp.setAttribute('aria-label', L.name);
+    var sub = document.createElement('button'); sub.type='submit'; sub.textContent = L.enter;
+    f.appendChild(inp); f.appendChild(sub);
+    f.addEventListener('submit', function(ev){
+      ev.preventDefault();
+      var nm = (inp.value || '').trim().slice(0,24); if(!nm) { inp.focus(); return; }
+      var id = Date.now();
+      var list = store() || []; list.push({n:nm, p:right, t:id}); store(list);
+      f.remove(); renderHs(id);
+      var ok = document.createElement('p'); ok.className='note'; ok.style.marginTop='10px';
+      ok.textContent = L.saved; hsBox.insertBefore(ok, hsBox.querySelector('table'));
+    });
+    hsBox.appendChild(f);
+    root.appendChild(hsBox);
+    renderHs();
+  }
+
+  data.forEach(function(item, qi){
+    var box = document.createElement('div');
+    box.className = 'q' + (item.opts ? '' : ' tf');
+    var num = document.createElement('div');
+    num.className = 'num';
+    num.textContent = (item.opts ? L.q : L.t) + ' ' + (qi+1);
+    box.appendChild(num);
+    var pr = document.createElement('div');
+    pr.className = 'prompt'; pr.textContent = item.q;
+    box.appendChild(pr);
+    var why = document.createElement('div');
+    why.className = 'why hidden'; why.setAttribute('role','status');
+    if(item.opts){
+      item.opts.forEach(function(text, oi){
+        var b = document.createElement('button');
+        b.type='button'; b.className='opt'; b.textContent=text;
+        b.addEventListener('click', function(){
+          var all = box.querySelectorAll('.opt');
+          for(var k=0;k<all.length;k++){ all[k].disabled = true; }
+          var hit = (oi === item.ok);
+          b.classList.add(hit ? 'ok' : 'no');
+          var m = document.createElement('span');
+          m.className='mark'; m.textContent = hit ? '✓' : '✗';
+          b.appendChild(m);
+          if(!hit){
+            all[item.ok].classList.add('ok');
+            var m2 = document.createElement('span');
+            m2.className='mark'; m2.textContent='✓';
+            all[item.ok].appendChild(m2);
+          }
+          why.textContent = item.why;
+          why.classList.remove('hidden');
+          done++; if(hit) right++;
+          count.innerHTML = L.score.replace('{d}', '<b>'+done+'</b>').replace('{t}', total).replace('{r}', '<b>'+right+'</b>');
+          if(done === total) buildHs();
+        });
+        box.appendChild(b);
+      });
+    } else {
+      var t = document.createElement('button');
+      t.type='button'; t.className='ghost'; t.textContent = L.show;
+      t.addEventListener('click', function(){
+        why.classList.toggle('hidden');
+        t.textContent = why.classList.contains('hidden') ? L.show : L.hide;
+      });
+      why.textContent = item.why;
+      box.appendChild(t);
+    }
+    box.appendChild(why);
+    root.appendChild(box);
+  });
+
+  var bar = document.createElement('div'); bar.className='bar';
+  count = document.createElement('div');
+  count.innerHTML = L.score.replace('{d}','<b>0</b>').replace('{t}', total).replace('{r}','<b>0</b>');
+  var again = document.createElement('button');
+  again.type='button'; again.className='ghost'; again.textContent = L.again;
+  again.addEventListener('click', function(){ location.reload(); });
+  bar.appendChild(count); bar.appendChild(again);
+  root.appendChild(bar);
+})();
+
+</script>
+
 <h2>Material zum Mitnehmen</h2>
 <a class="dl" href="glossar.pdf">Glossar<span>28 Begriffe mit Erkl&auml;rung, Beispiel und Merksatz. Auch f&uuml;r die Pr&uuml;fung brauchbar.</span></a>
 <a class="dl" href="advance-organizer.pdf">Advance Organizer<span>Wo die Einheit im Studiengang sitzt, und was davor und danach kommt.</span></a>
@@ -78,7 +258,7 @@ Rechnung, sondern die Begr&uuml;ndung.</p>
 <p class="lit">KfW Research (2026). Nachfolge-Monitoring Mittelstand (Fokus Volkswirtschaft Nr. 526).</p>
 <p class="lit">IfM Bonn (2025). <i>Daten und Fakten Nr. 37</i>: Unternehmens&uuml;bergaben 2026 bis 2030.</p>
 
-<div class="meta">Dr. Christian Neusser &middot; <a href="mailto:christian.neusser@uni-siegen.de">christian.neusser@uni-siegen.de</a>
+<div class="meta">Dr. Christian Neusser &middot; <a href="mailto:christian.neusser@me.com">christian.neusser@me.com</a>
 </div>
 </div>
 </body>
