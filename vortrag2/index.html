@@ -85,6 +85,15 @@ a.dl:hover{border-color:var(--navy);background:var(--panel)}
  .hs input{background:#14161c}
  .hs button[type=submit]{background:#C8D7EE;color:#14161c}
 }
+
+.two{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
+@media (max-width:620px){.two{grid-template-columns:1fr}}
+.two .col{border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+.two .col h4{margin:0 0 10px;font-size:14px;color:var(--slate);font-weight:700;line-height:1.4}
+.two ol{margin:0;padding-left:22px;font-size:15px}
+.two li{margin-bottom:6px}
+.two li.hit{font-weight:700;color:var(--navy)}
+@media (prefers-color-scheme:dark){.two li.hit{color:#C8D7EE}}
 </style>
 </head>
 <body>
@@ -253,6 +262,46 @@ not the verdict.</p>
 <li>Then: hedging decisions under model uncertainty</li>
 <li>Later in the module: model governance and what the EU AI Act does and does not cover</li>
 </ul>
+
+<h2>Where the test comes from</h2>
+<p>The three part test we used is a compression, built for one session, and the name is mine. The requirements
+underneath it are not mine. They come from two widely used frameworks, and both list <b>seven</b>, not three.
+Worth knowing the day you have to argue about a model in writing.</p>
+
+<div class="two">
+  <div class="col">
+    <h4>EU, Ethics Guidelines for Trustworthy AI (2019)</h4>
+    <ol><li>Human agency and oversight</li><li>Technical robustness and safety</li><li>Privacy and data governance</li><li class="hit">Transparency</li><li>Diversity, non-discrimination and fairness</li><li>Societal and environmental well-being</li><li class="hit">Accountability</li></ol>
+  </div>
+  <div class="col">
+    <h4>NIST AI Risk Management Framework 1.0 (2023), characteristics of trustworthy AI</h4>
+    <ol><li>Valid and reliable</li><li>Safe</li><li>Secure and resilient</li><li class="hit">Accountable and transparent</li><li>Explainable and interpretable</li><li>Privacy-enhanced</li><li>Fair, with harmful bias managed</li></ol>
+  </div>
+</div>
+
+<div class="box">
+<h3>What the highlighting means</h3>
+<p><b>Traceability</b> is not a requirement of its own in either list. The EU guidelines name it as the mechanism
+that serves transparency. In research data management it stands on its own, as principle R1.2 of the FAIR
+principles: data are associated with detailed provenance.</p>
+<p><b>Accountability</b> is a requirement in both lists, and the EU guidelines name auditability as its mechanism.
+In banking supervision the same idea appears as documentation an unfamiliar party can follow, and validation
+independent of whoever built the model.</p>
+<p><b>Reproducibility appears in neither list.</b> It is the norm of empirical and computational science, carried
+over here to model output. In AI regulation it is the least codified of the three, and that gap is itself worth
+remembering.</p>
+</div>
+
+<p class="lit">European Commission, High-Level Expert Group on AI (2019). <i>Ethics guidelines for trustworthy AI</i>.
+<a href="https://digital-strategy.ec.europa.eu/en/library/ethics-guidelines-trustworthy-ai">digital-strategy.ec.europa.eu</a></p>
+<p class="lit">National Institute of Standards and Technology (2023). <i>Artificial intelligence risk management
+framework (AI RMF 1.0)</i>, NIST AI 100-1.
+<a href="https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.100-1.pdf">nvlpubs.nist.gov</a></p>
+<p class="lit">Board of Governors of the Federal Reserve System (2011). <i>Guidance on model risk management</i>, SR 11-7.
+<a href="https://www.federalreserve.gov/supervisionreg/srletters/sr1107.htm">federalreserve.gov</a></p>
+<p class="lit">Wilkinson, M. D. et al. (2016). The FAIR guiding principles for scientific data management and
+stewardship. <i>Scientific Data, 3</i>, 160018.
+<a href="https://www.nature.com/articles/sdata201618">nature.com</a></p>
 
 <h2>Reading</h2>
 <p class="lit">Rossi, B. (2013). Exchange rate predictability. <i>Journal of Economic Literature, 51</i>(4), 1063 to 1119.</p>
